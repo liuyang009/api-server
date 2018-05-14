@@ -49,7 +49,7 @@ public class ApiTestController {
         Role role = new Role();
         role.setId(1L);
         role.setName("ROLE_manager");
-        role.setNameZh("部门经理");
+        role.setNameZh("超级管理员");
         list.add(role);
         return R.ok().put("data", list);
     }
