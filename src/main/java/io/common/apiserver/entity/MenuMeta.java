@@ -1,32 +1,22 @@
 package io.common.apiserver.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+/**
+ * @project：api-server
+ * @description：MenuMeta 配置
+ * @author：five.liu
+ * @creat_time：2018年05月14日14:52
+ */
 public class MenuMeta {
-    public MenuMeta(){
-
-    }
-
-    public MenuMeta(boolean keepAlive, boolean requireAuth) {
-        this.keepAlive = keepAlive;
-        this.requireAuth = requireAuth;
-    }
 
     private boolean keepAlive;
     private boolean requireAuth;
 
-    public boolean isKeepAlive() {
-        return keepAlive;
-    }
-
-    public void setKeepAlive(boolean keepAlive) {
-        this.keepAlive = keepAlive;
-    }
-
-    public boolean isRequireAuth() {
-        return requireAuth;
-    }
-
-    public void setRequireAuth(boolean requireAuth) {
-        this.requireAuth = requireAuth;
-    }
 }
