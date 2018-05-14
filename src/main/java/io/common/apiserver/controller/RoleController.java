@@ -28,7 +28,10 @@ public class RoleController {
     @Login
     @PostMapping("/add")
     @ApiOperation("新增")
-    public R addRole(@RequestBody Role role){
+    public R addRole(@RequestParam String name, @RequestParam String nameZh){
+        Role role = new Role();
+        role.setName(name);
+        role.setNameZh(nameZh);
         roleService.save(role);
         return R.ok();
     }
