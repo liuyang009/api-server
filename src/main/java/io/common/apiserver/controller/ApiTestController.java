@@ -1,7 +1,8 @@
 package io.common.apiserver.controller;
 
-import io.common.apiserver.entity.Menu;
-import io.common.apiserver.entity.MenuMeta;
+import com.google.common.collect.Lists;
+import io.common.apiserver.annotation.Login;
+import io.common.apiserver.entity.Role;
 import io.common.apiserver.service.MenuService;
 import io.common.apiserver.util.JWTUtils;
 import io.common.apiserver.util.R;
@@ -10,7 +11,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,12 +30,27 @@ public class ApiTestController {
     @PostMapping("login")
     @ApiOperation("忽略Token验证测试")
     public R Login(@RequestParam("username") String username, @RequestParam("password") String password){
+       // return R.error("用户名或密码错误");
         return R.ok().put("token", JWTUtils.sign(username,"test").get("token"));
     }
 
+    @Login
     @GetMapping("/menu")
     @ApiOperation("系统菜单")
     public R sysMenu() {
         return R.ok().put("data", menuService.findByParentId(null));
+    }
+
+    @Login
+    @GetMapping("/roles")
+    @ApiOperation("系统角色")
+    public R sysRole() {
+        List<Role> list = Lists.newArrayList();
+        Role role = new Role();
+        role.setId(1L);
+        role.setName("ROLE_manager");
+        role.setNameZh("部门经理");
+        list.add(role);
+        return R.ok().put("data", list);
     }
 }
