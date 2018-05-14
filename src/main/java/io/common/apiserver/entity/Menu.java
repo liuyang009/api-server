@@ -2,8 +2,7 @@ package io.common.apiserver.entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -16,15 +15,19 @@ import java.util.List;
 @Entity(name = "sys_menu")
 public class Menu {
 
+    @Id
+    @GeneratedValue
     private Long id;
     private String url;
     private String path;
-    private Object component;
+    private String component;
     private String name;
     private String iconCls;
     private Long parentId;
 
-    @Transient
+    @OneToMany
+    @JoinColumn(name = "parentId")
+    @OrderBy("id")
     private List<Menu> children;
 
     @Transient
