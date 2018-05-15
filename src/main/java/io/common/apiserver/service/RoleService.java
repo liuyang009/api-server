@@ -26,4 +26,8 @@ public class RoleService {
     public List<Role> findAll() {
         return roleDao.findAll();
     }
+
+    public void delete(Long id) {
+        roleDao.delete(id);
+    }
 }

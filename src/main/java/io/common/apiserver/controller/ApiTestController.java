@@ -38,7 +38,7 @@ public class ApiTestController {
     @GetMapping("/menu")
     @ApiOperation("系统菜单")
     public R sysMenu() {
-        return R.ok().put("data", menuService.findByParentId(null));
+        return R.ok().put("data", menuService.findByParentId(1L));
     }
 
     @Login
