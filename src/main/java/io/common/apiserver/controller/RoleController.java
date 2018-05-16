@@ -2,6 +2,7 @@ package io.common.apiserver.controller;
 
 import com.google.common.collect.Maps;
 import io.common.apiserver.annotation.Login;
+import io.common.apiserver.dto.RoleMenuDto;
 import io.common.apiserver.entity.Menu;
 import io.common.apiserver.entity.Role;
 import io.common.apiserver.service.MenuService;
@@ -66,11 +67,20 @@ public class RoleController {
     @ApiOperation("获取角色菜单")
     public R menuByRole(@PathVariable Long roleId){
         List<Menu> menuList = menuService.findByParentId(null);
-        List<Long> mids = Arrays.asList(6L,7L);
+        List<Long> mIds = menuService.findByRoleId(roleId);
         Map<String,Object> params = Maps.newHashMap();
         params.put("menus", menuList);
-        params.put("mids", mids);
+        params.put("mids", mIds);
 
         return R.ok(params);
+    }
+
+    @Login
+    @PutMapping("basic/menu")
+    public R updateRoleMenu(@RequestBody RoleMenuDto dto){
+
+        roleService.updateRoleMenus(dto);
+
+        return R.ok();
     }
 }

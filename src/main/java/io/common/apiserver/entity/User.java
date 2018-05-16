@@ -63,7 +63,7 @@ public class User {
      * 角色
      */
     @Transient
-    private List<Role> roles;
+    private List<Long> roleIds;
     /**
      * 性别
      */

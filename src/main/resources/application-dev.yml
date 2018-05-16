@@ -29,7 +29,6 @@ spring:
          config:
              multi-statement-allow: true
 
-
   jpa:
     show-sql: true
     hibernate:
@@ -37,6 +36,8 @@ spring:
     properties:
           hibernate:
             dialect : org.hibernate.dialect.MySQL5InnoDBDialect
+  jackson:
+    serialization: true
 
 
 logging:

@@ -1,6 +1,12 @@
 package io.common.apiserver.controller;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import io.common.apiserver.dao.RoleDao;
+import io.common.apiserver.dto.RoleDto;
+import io.common.apiserver.entity.Role;
 import io.common.apiserver.entity.User;
+import io.common.apiserver.service.RoleService;
 import io.common.apiserver.service.UserService;
 import io.common.apiserver.util.R;
 import io.swagger.annotations.Api;
@@ -12,6 +18,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @project：api-server
@@ -27,10 +35,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RoleService roleService;
+
     @PostMapping("/add")
     public R addUser(User user){
         user.setGmtCreate(new Date());
-        userService.save(user);
+        user.setStatus(1);
+        userService.insert(user);
         return R.ok();
     }
 
@@ -42,13 +54,26 @@ public class UserController {
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = new PageRequest(page - 1, size, sort);
         Page<User> pageUtil = userService.getWhereClause(pageable,username,mobile);
-        return R.ok().put("data", pageUtil);
+        List<RoleDto> list = Lists.newArrayList();
+        List<Role> roleList = roleService.findAll();
+        if (roleList != null && !roleList.isEmpty()){
+            for (Role role : roleList) {
+                RoleDto dto = new RoleDto();
+                dto.setValue(role.getId());
+                dto.setLabel(role.getNameZh());
+                list.add(dto);
+            }
+        }
+        Map<String, Object> params = Maps.newHashMap();
+        params.put("data", pageUtil);
+        params.put("roles", list);
+        return R.ok(params);
     }
 
     @PutMapping("/edit")
     public R editUser(@RequestBody User user){
         user.setGmtModified(new Date());
-        userService.save(user);
+        userService.update(user);
         return R.ok();
     }
 
