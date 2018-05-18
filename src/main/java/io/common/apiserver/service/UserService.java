@@ -98,4 +98,8 @@ public class UserService {
         }
         userRoleDao.save(userRoleList);
     }
+
+    public User findByUsername(String username) {
+        return userDao.findByUsername(username);
+    }
 }
