@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 /**
  * @project：api-server
  * @description：LoginController
@@ -40,6 +42,9 @@ public class LoginController {
         if (user == null || !password.equals(user.getPassword())){
             return R.error("用户名或密码错误");
         }
-        return R.ok().put("token", JWTUtils.sign(username,secret).get("token"));
+        Map<String, Object> map = JWTUtils.sign(username, secret);
+        map.put("username", username);
+
+        return R.ok().put("data", map);
     }
 }
