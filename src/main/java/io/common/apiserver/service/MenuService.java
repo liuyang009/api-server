@@ -43,4 +43,8 @@ public class MenuService {
         }
         return roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
     }
+
+    public Menu findOne(Long distinctId) {
+        return menuDao.findOne(distinctId);
+    }
 }

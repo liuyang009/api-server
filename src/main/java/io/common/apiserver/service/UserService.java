@@ -1,8 +1,10 @@
 package io.common.apiserver.service;
 
 import com.google.common.collect.Lists;
+import io.common.apiserver.dao.MenuDao;
 import io.common.apiserver.dao.UserDao;
 import io.common.apiserver.dao.UserRoleDao;
+import io.common.apiserver.entity.Menu;
 import io.common.apiserver.entity.User;
 import io.common.apiserver.entity.UserRole;
 import org.apache.commons.lang.StringUtils;
@@ -31,6 +33,9 @@ public class UserService {
 
     @Autowired
     private UserRoleDao userRoleDao;
+
+    @Autowired
+    private MenuDao menuDao;
 
     @Transactional(rollbackFor = Exception.class)
     public User insert(User user) {
@@ -101,5 +106,9 @@ public class UserService {
 
     public User findByUsername(String username) {
         return userDao.findByUsername(username);
+    }
+
+    public List<Menu> listMenus(String username) {
+        return menuDao.listUserMenus(username);
     }
 }

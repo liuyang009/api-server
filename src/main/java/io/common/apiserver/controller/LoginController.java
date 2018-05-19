@@ -1,6 +1,5 @@
 package io.common.apiserver.controller;
 
-import io.common.apiserver.annotation.Login;
 import io.common.apiserver.entity.User;
 import io.common.apiserver.service.UserService;
 import io.common.apiserver.util.JWTUtils;
@@ -25,7 +24,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 @Api(tags = "登录接口")
-public class LoginController {
+public class LoginController extends BaseController{
 
     @Value("${jwt.secret}")
     private String secret;
@@ -47,4 +46,5 @@ public class LoginController {
 
         return R.ok().put("data", map);
     }
+
 }

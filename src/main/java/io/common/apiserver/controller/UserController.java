@@ -2,14 +2,17 @@ package io.common.apiserver.controller;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import io.common.apiserver.dao.RoleDao;
+import io.common.apiserver.annotation.Login;
 import io.common.apiserver.dto.RoleDto;
+import io.common.apiserver.entity.Menu;
 import io.common.apiserver.entity.Role;
 import io.common.apiserver.entity.User;
+import io.common.apiserver.service.MenuService;
 import io.common.apiserver.service.RoleService;
 import io.common.apiserver.service.UserService;
 import io.common.apiserver.util.R;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @project：api-server
@@ -30,13 +35,17 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/user")
 @Api(tags = "用户接口")
-public class UserController {
+public class UserController extends BaseController{
 
     @Autowired
     private UserService userService;
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private MenuService menuService;
+
 
     @PostMapping("/add")
     public R addUser(User user){
@@ -54,6 +63,12 @@ public class UserController {
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = new PageRequest(page - 1, size, sort);
         Page<User> pageUtil = userService.getWhereClause(pageable,username,mobile);
+        List<User> content = pageUtil.getContent();
+        if (!content.isEmpty()){
+            content.stream().forEach(user -> {
+                user.setRoleIds(roleService.findByUserId(user.getId()));
+            });
+        }
         List<RoleDto> list = Lists.newArrayList();
         List<Role> roleList = roleService.findAll();
         if (roleList != null && !roleList.isEmpty()){
@@ -82,4 +97,32 @@ public class UserController {
         userService.deleteByIds(ids);
         return R.ok();
     }
+
+
+    @Login
+    @GetMapping("/menu")
+    @ApiOperation("用户权限菜单")
+    public R sysMenu() {
+        List<Menu> first = Lists.newArrayList();
+        List<Menu> menuList = userService.listMenus(getUsername());
+        if (menuList != null && !menuList.isEmpty()){
+            List<Long> ids = menuList.stream().map(Menu::getParentId).collect(Collectors.toList());
+            List<Long> distinctIds = ids.stream()
+                    .distinct()
+                    .collect(Collectors.toList());
+            for (Long distinctId : distinctIds) {
+                List<Menu> second = Lists.newArrayList();
+                for (Menu menu : menuList) {
+                    if (Objects.equals(menu.getParentId(), distinctId)){
+                        second.add(menu);
+                    }
+                }
+                Menu m = menuService.findOne(distinctId);
+                m.setChildren(second);
+                first.add(m);
+            }
+        }
+        return R.ok().put("data", first);
+    }
+
 }
