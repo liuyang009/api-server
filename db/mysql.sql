@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2018-05-19 10:59:32
+Date: 2018-05-24 18:12:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,16 +30,17 @@ CREATE TABLE `sys_menu` (
   PRIMARY KEY (`id`),
   KEY `FK2jrf4gb0gjqi8882gxytpxnhe` (`parent_id`),
   CONSTRAINT `FK2jrf4gb0gjqi8882gxytpxnhe` FOREIGN KEY (`parent_id`) REFERENCES `sys_menu` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
 INSERT INTO `sys_menu` VALUES ('1', '', '', '所有', null, '', '/');
-INSERT INTO `sys_menu` VALUES ('5', 'Home', 'el-icon-location-outline', '系统管理', '1', '/home', '/');
-INSERT INTO `sys_menu` VALUES ('6', 'ShopBasic', null, '门店管理', '5', '/shop/basic', '/shop/list');
+INSERT INTO `sys_menu` VALUES ('5', 'Home', 'el-icon-location-outline', '基础服务', '1', '/home', '/');
+INSERT INTO `sys_menu` VALUES ('6', 'ShopBasic', null, '热门活动管理', '9', '/shop/basic', '/shop/list');
 INSERT INTO `sys_menu` VALUES ('7', 'UserBasic', null, '用户管理', '5', '/user/basic', '/user/list');
 INSERT INTO `sys_menu` VALUES ('8', 'RoleBasic', null, '角色管理', '5', '/role/basic', '/role/list');
+INSERT INTO `sys_menu` VALUES ('9', 'Home', 'el-icon-location-outline', '首页', '1', '/home', '/');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -100,8 +101,8 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', '2018-05-01 00:00:00', '123456789@qq.com', '2018-05-15 15:13:33', '2018-05-15 18:15:25', '18023456544', '测试', '123456', null, null, null, 'test');
-INSERT INTO `sys_user` VALUES ('3', '2018-05-01 00:00:00', '987654321@qq.com', '2018-05-16 09:54:52', '2018-05-19 10:54:15', '18011112222', '测试2', '123456', null, null, null, 'test2');
+INSERT INTO `sys_user` VALUES ('1', '2018-05-01 00:00:00', '123456789@qq.com', '2018-05-15 15:13:33', '2018-05-24 13:44:33', '18023456544', '测试', '123456', null, '1', null, 'test');
+INSERT INTO `sys_user` VALUES ('3', '2018-05-01 00:00:00', '987654321@qq.com', '2018-05-16 09:54:52', '2018-05-24 13:44:17', '18011112222', '测试2', '123456', null, '0', null, 'test2');
 INSERT INTO `sys_user` VALUES ('4', '2018-05-17 00:00:00', '789@qq.com', '2018-05-17 17:28:14', null, '18023232222', '测试3', '123456', null, '1', null, 'test3');
 INSERT INTO `sys_user` VALUES ('5', '2018-05-17 00:00:00', '4@qq.com', '2018-05-17 17:34:02', null, '18044443333', '测试4', '123456', null, '1', null, 'test4');
 INSERT INTO `sys_user` VALUES ('6', '2018-05-17 00:00:00', '5@qq.com', '2018-05-17 17:34:42', '2018-05-18 09:02:09', '18055554444', '测试5', '123456', null, '1', null, 'test5');
@@ -110,7 +111,7 @@ INSERT INTO `sys_user` VALUES ('8', '2018-05-18 00:00:00', '7@qq.com', '2018-05-
 INSERT INTO `sys_user` VALUES ('9', '2018-05-18 00:00:00', '8@qq.com', '2018-05-18 16:38:11', null, '18088882222', '测试8', '123456', null, '1', null, 'test8');
 INSERT INTO `sys_user` VALUES ('10', '2018-05-18 00:00:00', '9@qq.com', '2018-05-18 16:38:36', null, '18099995555', '测试9', '123456', null, '1', null, 'test9');
 INSERT INTO `sys_user` VALUES ('11', '2018-05-18 00:00:00', '10@qq.com', '2018-05-18 16:39:09', null, '18022225454', '测试10', '123456', null, '1', null, 'test10');
-INSERT INTO `sys_user` VALUES ('12', '2018-05-18 00:00:00', '11@qq.com', '2018-05-18 16:39:33', null, '18011112222', '测试11', '123456', null, '1', null, 'test11');
+INSERT INTO `sys_user` VALUES ('12', '2018-05-18 00:00:00', '11@qq.com', '2018-05-18 16:39:33', '2018-05-24 13:44:40', '18011112222', '测试11', '123456', null, '0', null, 'test11');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -121,7 +122,7 @@ CREATE TABLE `sys_user_role` (
   `role_id` bigint(20) DEFAULT NULL,
   `user_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user_role
@@ -134,6 +135,6 @@ INSERT INTO `sys_user_role` VALUES ('6', '3', '8');
 INSERT INTO `sys_user_role` VALUES ('7', '3', '9');
 INSERT INTO `sys_user_role` VALUES ('8', '3', '10');
 INSERT INTO `sys_user_role` VALUES ('9', '3', '11');
-INSERT INTO `sys_user_role` VALUES ('10', '3', '12');
-INSERT INTO `sys_user_role` VALUES ('11', '2', '1');
-INSERT INTO `sys_user_role` VALUES ('12', '3', '3');
+INSERT INTO `sys_user_role` VALUES ('13', '3', '3');
+INSERT INTO `sys_user_role` VALUES ('14', '2', '1');
+INSERT INTO `sys_user_role` VALUES ('15', '3', '12');
