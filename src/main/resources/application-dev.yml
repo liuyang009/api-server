@@ -39,6 +39,12 @@ spring:
   jackson:
     serialization: true
 
+my:
+  oss:
+    accessKeyId: ''
+    ossAddress: ''
+    accessKeySecret: ''
+    bucketName: ''
 
 logging:
   level:

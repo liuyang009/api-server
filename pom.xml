@@ -27,6 +27,7 @@
         <swagger.version>2.7.0</swagger.version>
         <common.version>2.6</common.version>
         <jwt.version>3.3.0</jwt.version>
+		<oss.version>2.4.0</oss.version>
 	</properties>
 
 	<dependencies>
@@ -77,6 +78,11 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.aliyun.oss</groupId>
+			<artifactId>aliyun-sdk-oss</artifactId>
+			<version>${oss.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
