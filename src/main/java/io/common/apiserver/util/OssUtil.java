@@ -12,7 +12,6 @@ import java.io.File;
  * @author：five.liu
  * @creat_time：2018年05月24日15:14
  */
-@Component
 public class OssUtil {
 
     private static final String endpoint = "";
