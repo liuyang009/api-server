@@ -24,10 +24,11 @@ public class Menu {
     private String name;
     private String iconCls;
     private Long parentId;
+    private Long orderNum;
 
     @OneToMany
     @JoinColumn(name = "parentId")
-    @OrderBy("id")
+    @OrderBy("orderNum")
     private List<Menu> children;
 
     @Transient

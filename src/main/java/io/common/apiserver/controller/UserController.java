@@ -20,10 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -122,6 +119,7 @@ public class UserController extends BaseController{
                 first.add(m);
             }
         }
+        Collections.sort(first, Comparator.comparing(Menu::getOrderNum));
         return R.ok().put("data", first);
     }
 
