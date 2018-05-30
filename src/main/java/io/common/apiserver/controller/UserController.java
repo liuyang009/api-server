@@ -3,6 +3,7 @@ package io.common.apiserver.controller;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.common.apiserver.annotation.Login;
+import io.common.apiserver.dto.PasswordDto;
 import io.common.apiserver.dto.RoleDto;
 import io.common.apiserver.entity.Menu;
 import io.common.apiserver.entity.Role;
@@ -44,6 +45,7 @@ public class UserController extends BaseController{
     private MenuService menuService;
 
 
+    @Login
     @PostMapping("/add")
     public R addUser(User user){
         user.setGmtCreate(new Date());
@@ -52,6 +54,7 @@ public class UserController extends BaseController{
         return R.ok();
     }
 
+    @Login
     @GetMapping("/list")
     public R list(@RequestParam int page, @RequestParam int size,
     @RequestParam(required = false) String username,
@@ -83,12 +86,14 @@ public class UserController extends BaseController{
     }
 
     @PutMapping("/edit")
+    @Login
     public R editUser(@RequestBody User user){
         user.setGmtModified(new Date());
         userService.update(user);
         return R.ok();
     }
 
+    @Login
     @DeleteMapping("/delete/{ids}")
     public R deleteUser(@PathVariable String ids){
         userService.deleteByIds(ids);
@@ -121,6 +126,21 @@ public class UserController extends BaseController{
         }
         Collections.sort(first, Comparator.comparing(Menu::getOrderNum));
         return R.ok().put("data", first);
+    }
+
+    @Login
+    @PostMapping("/updatePwd")
+    @ApiOperation("修改密码")
+    public R updatePwd(PasswordDto dto){
+
+        String username = getUsername();
+        User user = userService.findByUsername(username);
+        if (user == null){
+            return R.error("用户不存在");
+        }
+        user.setPassword(dto.getPassword());
+        userService.save(user);
+        return R.ok();
     }
 
 }

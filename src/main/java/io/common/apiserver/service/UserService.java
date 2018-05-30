@@ -47,6 +47,10 @@ public class UserService {
         return save;
     }
 
+    public User save(User user){
+        return userDao.save(user);
+    }
+
     public Page<User> getPage(Pageable pageable) {
         return userDao.findAll(pageable);
     }
