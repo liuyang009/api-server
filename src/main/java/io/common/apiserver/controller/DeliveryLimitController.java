@@ -1,7 +1,6 @@
 package io.common.apiserver.controller;
 
 import io.common.apiserver.annotation.Login;
-import io.common.apiserver.entity.Channel;
 import io.common.apiserver.entity.DeliveryLimit;
 import io.common.apiserver.service.DeliveryLimitService;
 import io.common.apiserver.util.R;
