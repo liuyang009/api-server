@@ -1,7 +1,7 @@
 package io.common.apiserver.util;
 
 import com.aliyun.oss.OSSClient;
-import org.springframework.stereotype.Component;
+
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

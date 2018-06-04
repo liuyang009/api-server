@@ -23,9 +23,9 @@ public class DeliveryLimit {
     @GeneratedValue
     private Long id;
 
-    private String startDate;
+    private Date startDate;
 
-    private String endDate;
+    private Date endDate;
 
     private String createUser;
 

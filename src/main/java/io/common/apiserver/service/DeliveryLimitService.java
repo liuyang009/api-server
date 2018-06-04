@@ -3,6 +3,8 @@ package io.common.apiserver.service;
 import io.common.apiserver.dao.DeliveryLimitDao;
 import io.common.apiserver.entity.DeliveryLimit;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,5 +21,9 @@ public class DeliveryLimitService {
 
     public void save(DeliveryLimit limit) {
         deliveryLimitDao.save(limit);
+    }
+
+    public Page<DeliveryLimit> getPage(Pageable pageable) {
+        return deliveryLimitDao.findAll(pageable);
     }
 }
